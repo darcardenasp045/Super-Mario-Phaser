@@ -140,6 +140,8 @@ function preload() {
     this.load.spritesheet('goomba', 'assets/entities/' + levelStyle + '/goomba.png', { frameWidth: 16, frameHeight: 16 });
     this.load.spritesheet('koopa', 'assets/entities/koopa.png', { frameWidth: 16, frameHeight: 24 });
     this.load.spritesheet('shell', 'assets/entities/shell.png', { frameWidth: 16, frameHeight: 15 });
+    this.load.image('background', 'assets/scenery/overworld/background.jpg');
+
 
     // Load objects sprites
     this.load.spritesheet('fireball', 'assets/entities/fireball.png', { frameWidth: 8, frameHeight: 8 });
@@ -374,50 +376,13 @@ function drawWorld() {
     //Drawing scenery props
 
     //> Drawing the Sky
-    this.add.rectangle(screenWidth, 0, worldWidth, screenHeight, isLevelOverworld ? 0x8585FF : 0x000000).setOrigin(0).depth = -1;
+    // Repite la imagen de fondo usando tileSprite para que cubra todo el ancho del mundo y se vea bien
+    this.add.tileSprite(0, 0, worldWidth, screenHeight, 'background').setOrigin(0).setDepth(-1);
 
     let propsY = screenHeight - platformHeight;
 
     if (isLevelOverworld) {
-        //> Clouds
-        for (i = 0; i < Phaser.Math.Between(Math.trunc(worldWidth / 760), Math.trunc(worldWidth / 380)); i++) {
-            let x = generateRandomCoordinate(false, false);
-            let y = Phaser.Math.Between(screenHeight / 80, screenHeight / 2.2);
-            if (Phaser.Math.Between(0, 10) < 5) {
-                this.add.image(x, y, 'cloud1').setOrigin(0).setScale(screenHeight / 1725);
-            } else {
-                this.add.image(x, y, 'cloud2').setOrigin(0).setScale(screenHeight / 1725);
-            }
-        }
-
-        //> Mountains
-        for (i = 0; i < Phaser.Math.Between(worldWidth / 6400, worldWidth / 3800); i++) {
-            let x = generateRandomCoordinate();
-
-            if (Phaser.Math.Between(0, 10) < 5) {
-                this.add.image(x, propsY, 'mountain1').setOrigin(0, 1).setScale(screenHeight / 517);
-            } else {
-                this.add.image(x, propsY, 'mountain2').setOrigin(0, 1).setScale(screenHeight / 517);
-            }
-        }
-
-        //> Bushes
-        for (i = 0; i < Phaser.Math.Between(Math.trunc(worldWidth / 960), Math.trunc(worldWidth / 760)); i++) {
-            let x = generateRandomCoordinate();
-
-            if (Phaser.Math.Between(0, 10) < 5) {
-                this.add.image(x, propsY, 'bush1').setOrigin(0, 1).setScale(screenHeight / 609);
-            } else {
-                this.add.image(x, propsY, 'bush2').setOrigin(0, 1).setScale(screenHeight / 609);
-            }
-        }
-
-        //> Fences
-        for (i = 0; i < Phaser.Math.Between(Math.trunc(worldWidth / 4000), Math.trunc(worldWidth / 2000)); i++) {
-            let x = generateRandomCoordinate();
-
-            this.add.tileSprite(x, propsY, Phaser.Math.Between(100, 250), 35, 'fence').setOrigin(0, 1).setScale(screenHeight / 863);
-        }
+        // Elementos visuales eliminados: nubes, montañas, arbustos y cercas
     }
 
     //> Final flag

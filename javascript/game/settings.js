@@ -38,18 +38,18 @@ function drawSettingsMenu() {
     this.settingsMenuCreated = true;
 
     this.settingsMenuObjects = this.add.group();
-    
+
     //> Settings
 
     let settingsBackground = this.add.rectangle(0, screenHeight / 2, worldWidth, screenHeight, 0x171717, 0.95).setScrollFactor(0);
     settingsBackground.depth = 4
     this.settingsMenuObjects.add(settingsBackground);
 
-    let settingsXbutton = this.add.text(screenWidth * 0.94, screenHeight - (screenHeight* 0.9), 'x', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 50), align: 'center'}).setInteractive().on('pointerdown', () => hideSettings.call(this));
+    let settingsXbutton = this.add.text(screenWidth * 0.94, screenHeight - (screenHeight * 0.9), 'x', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 50), align: 'center' }).setInteractive().on('pointerdown', () => hideSettings.call(this));
     settingsXbutton.depth = 5;
     this.settingsMenuObjects.add(settingsXbutton);
 
-    let settingsText = this.add.text(screenWidth / 6, screenHeight - (screenHeight* 0.85), 'Settings', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 45), align: 'center'});
+    let settingsText = this.add.text(screenWidth / 6, screenHeight - (screenHeight * 0.85), 'Settings', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 45), align: 'center' });
     settingsText.depth = 5;
     this.settingsMenuObjects.add(settingsText);
 
@@ -61,11 +61,11 @@ function drawSettingsMenu() {
     musicCheckbox.depth = 5;
     this.settingsMenuObjects.add(musicCheckbox);
 
-    musicCheckbox.on('valuechange', function() {
+    musicCheckbox.on('valuechange', function () {
         localStorage.setItem('music-enabled', musicCheckbox.checked)
     });
 
-    let musicCheckboxText = this.add.text(screenWidth / 8, screenHeight / 2.9, 'Music', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 55), align: 'center'}).setOrigin(0.5, 0).setInteractive().on('pointerdown', () => musicCheckbox.toggleChecked());;
+    let musicCheckboxText = this.add.text(screenWidth / 8, screenHeight / 2.9, 'Music', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 55), align: 'center' }).setOrigin(0.5, 0).setInteractive().on('pointerdown', () => musicCheckbox.toggleChecked());;
     musicCheckboxText.setOrigin(0, 0.4).depth = 5;
     this.settingsMenuObjects.add(musicCheckboxText);
 
@@ -77,24 +77,24 @@ function drawSettingsMenu() {
     effectsCheckbox.depth = 5;
     this.settingsMenuObjects.add(effectsCheckbox);
 
-    effectsCheckbox.on('valuechange', function() {
+    effectsCheckbox.on('valuechange', function () {
         localStorage.setItem('effects-enabled', effectsCheckbox.checked)
     });
 
-    let effectsCheckboxText = this.add.text(screenWidth / 8, screenHeight / 2.3, 'Effects', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 55), align: 'center'}).setOrigin(0.5, 0).setInteractive().on('pointerdown', () => effectsCheckbox.toggleChecked());
+    let effectsCheckboxText = this.add.text(screenWidth / 8, screenHeight / 2.3, 'Effects', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 55), align: 'center' }).setOrigin(0.5, 0).setInteractive().on('pointerdown', () => effectsCheckbox.toggleChecked());
     effectsCheckboxText.setOrigin(0, 0.4).depth = 5;
     this.settingsMenuObjects.add(effectsCheckboxText);
 
     let sliderDot = this.add.circle(screenWidth / 5.15, screenHeight / 1.6, screenWidth / 115, 0xffffff, 0.75)
     sliderDot.slider = this.plugins.get('rexsliderplugin').add(sliderDot, {
         endPoints: [{
-                x: sliderDot.x - screenWidth / 9.5,
-                y: sliderDot.y
-            },
-            {
-                x: sliderDot.x + screenWidth / 9.5,
-                y: sliderDot.y
-            }
+            x: sliderDot.x - screenWidth / 9.5,
+            y: sliderDot.y
+        },
+        {
+            x: sliderDot.x + screenWidth / 9.5,
+            y: sliderDot.y
+        }
         ],
         value: 0.69
     });
@@ -105,15 +105,15 @@ function drawSettingsMenu() {
     sliderBar.lineStyle(5, 0x373737, 1).strokePoints(sliderDot.slider.endPoints).depth = 4;
     this.settingsMenuObjects.add(sliderBar);
 
-    let sliderDotText = this.add.text(screenWidth / 5.15, screenHeight / 1.85, 'General volume', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 60), align: 'center'}).setOrigin(0.5, 0);
+    let sliderDotText = this.add.text(screenWidth / 5.15, screenHeight / 1.85, 'General volume', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 60), align: 'center' }).setOrigin(0.5, 0);
     sliderDotText.depth = 5;
     this.settingsMenuObjects.add(sliderDotText);
 
-    let sliderPercentageText = this.add.text(screenWidth / 5.15, screenHeight / 1.5, Math.trunc(sliderDot.slider.value * 100), { fontFamily: 'pixel_nums', fontSize: (screenWidth / 80), align: 'center'}).setOrigin(0.5, 0);
+    let sliderPercentageText = this.add.text(screenWidth / 5.15, screenHeight / 1.5, Math.trunc(sliderDot.slider.value * 100), { fontFamily: 'pixel_nums', fontSize: (screenWidth / 80), align: 'center' }).setOrigin(0.5, 0);
     sliderPercentageText.depth = 5;
     this.settingsMenuObjects.add(sliderPercentageText);
 
-    sliderDot.slider.on('valuechange', function() {
+    sliderDot.slider.on('valuechange', function () {
         sliderPercentageText.setText(Math.trunc(sliderDot.slider.value * 100));
         localStorage.setItem('volume', Math.trunc(sliderDot.slider.value * 100))
     });
@@ -135,7 +135,7 @@ function drawSettingsMenu() {
 
     //> Controls
 
-    let controlsText = this.add.text(screenWidth / 1.5, screenHeight - (screenHeight* 0.85), 'Controls', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 45), align: 'center'});
+    let controlsText = this.add.text(screenWidth / 1.5, screenHeight - (screenHeight * 0.85), 'Controls', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 45), align: 'center' });
     controlsText.depth = 5;
     this.settingsMenuObjects.add(controlsText);
 
@@ -182,32 +182,32 @@ function drawSettingsMenu() {
     const directionTexts = [
         {
             control: 'JUMP',
-            text: this.add.text(screenWidth / 1.37, screenHeight / 2.25, displayChar(controlKeys.JUMP.keyCode), { fontFamily: 'pixel_nums', fontSize: (screenWidth / 55), align: 'center'}),
+            text: this.add.text(screenWidth / 1.37, screenHeight / 2.25, displayChar(controlKeys.JUMP.keyCode), { fontFamily: 'pixel_nums', fontSize: (screenWidth / 55), align: 'center' }),
             icon: this.add.sprite(screenWidth / 1.37, screenHeight / 2, 'mario').setScale(screenHeight / 500).setOrigin(0.5).anims.play('jump')
         },
         {
             control: 'DOWN',
-            text: this.add.text(screenWidth / 1.37, screenHeight / 1.75, displayChar(controlKeys.DOWN.keyCode), { fontFamily: 'pixel_nums', fontSize: (screenWidth / 55), align: 'center'}),
+            text: this.add.text(screenWidth / 1.37, screenHeight / 1.75, displayChar(controlKeys.DOWN.keyCode), { fontFamily: 'pixel_nums', fontSize: (screenWidth / 55), align: 'center' }),
             icon: this.add.sprite(screenWidth / 1.37, screenHeight / 1.68, 'mario-grown').setScale(screenHeight / 550).setOrigin(0.6, 0).anims.play('grown-mario-crouch')
         },
         {
             control: 'LEFT',
-            text: this.add.text(screenWidth / 1.5, screenHeight / 1.75, displayChar(controlKeys.LEFT.keyCode), { fontFamily: 'pixel_nums', fontSize: (screenWidth / 55), align: 'center'}),
+            text: this.add.text(screenWidth / 1.5, screenHeight / 1.75, displayChar(controlKeys.LEFT.keyCode), { fontFamily: 'pixel_nums', fontSize: (screenWidth / 55), align: 'center' }),
             icon: this.add.sprite(screenWidth / 1.56, screenHeight / 1.75, 'mario').setScale(screenHeight / 500).setFlipX(true).setOrigin(0.6, 0.5)
         },
         {
             control: 'RIGHT',
-            text: this.add.text(screenWidth / 1.26, screenHeight / 1.75, displayChar(controlKeys.RIGHT.keyCode), { fontFamily: 'pixel_nums', fontSize: (screenWidth / 55), align: 'center'}),
+            text: this.add.text(screenWidth / 1.26, screenHeight / 1.75, displayChar(controlKeys.RIGHT.keyCode), { fontFamily: 'pixel_nums', fontSize: (screenWidth / 55), align: 'center' }),
             icon: this.add.sprite(screenWidth / 1.22, screenHeight / 1.75, 'mario').setScale(screenHeight / 500).setOrigin(0.6, 0.5)
         },
         {
             control: 'FIRE',
-            text: this.add.text(screenWidth / 1.65, screenHeight / 2.5, displayChar(controlKeys.FIRE.keyCode), { fontFamily: 'pixel_nums', fontSize: (screenWidth / 55), align: 'center'}),
+            text: this.add.text(screenWidth / 1.65, screenHeight / 2.5, displayChar(controlKeys.FIRE.keyCode), { fontFamily: 'pixel_nums', fontSize: (screenWidth / 55), align: 'center' }),
             icon: this.add.sprite(screenWidth / 1.65, screenHeight / 2.25, 'fireball').setScale(screenHeight / 300).setOrigin(0.5).anims.play('fireball-right-down', true)
         },
     ];
 
-    directionTexts.forEach(({control, text, icon}) => {
+    directionTexts.forEach(({ control, text, icon }) => {
         text.setInteractive().setOrigin(0.5, 0.4).depth = 5;
         icon.depth = 5;
         this.settingsMenuObjects.add(text);
@@ -215,18 +215,18 @@ function drawSettingsMenu() {
 
         text.on('pointerdown', function () {
             text.setText('...');
-    
+
             keydownHandler = function (event) {
                 document.removeEventListener('keydown', keydownHandler);
-    
+
                 let key = event.keyCode;
-    
+
                 if (Object.values(controlKeys).some(({ keyCode }) => keyCode === key)) {
                     alert('Key is already in use!');
                     text.setText(displayChar(controlKeys[control].keyCode));
                     return;
                 }
-    
+
                 controlKeys[control] = this.input.keyboard.addKey(key);
                 text.setText(displayChar(controlKeys[control].keyCode));
                 localStorage.setItem(control, controlKeys[control].keyCode);

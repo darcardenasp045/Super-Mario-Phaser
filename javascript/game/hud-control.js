@@ -1,27 +1,28 @@
 function createHUD() {
     let posY = screenWidth / 23;
 
-    this.scoreText = this.add.text(screenWidth / 40, posY, '', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 65), align: 'left'});
+    this.scoreText = this.add.text(screenWidth / 40, posY, '', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 65), align: 'left' });
     this.scoreText.setScrollFactor(0).depth = 5;
 
-    this.highScoreText = this.add.text(screenWidth / 2, posY, 'HIGH SCORE\n 000000', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 65), align: 'center'}).setOrigin(0.5, 0);
+    this.highScoreText = this.add.text(screenWidth / 2, posY, 'MAXIMO PUNTAJE\n 000000', { fontFamily: 'pixel_nums', fontSize: (screenWidth / 65), align: 'center', color: '#000000' }).setOrigin(0.5, 0);
     this.highScoreText.setScrollFactor(0).depth = 5;
 
-    this.timeLeftText = this.add.text(screenWidth * 0.925, posY, 'TIME\n' + timeLeft.toString().padStart(3, '0'), { fontFamily: 'pixel_nums', fontSize: (screenWidth / 65), align: 'right'});
+    this.timeLeftText = this.add.text(screenWidth * 0.925, posY, 'TIEMPO\n' + timeLeft.toString().padStart(3, '0'), { fontFamily: 'pixel_nums', fontSize: (screenWidth / 65), align: 'right', color: '#000000' }).setOrigin(1, 0);
     this.timeLeftText.setScrollFactor(0).depth = 5;
 
     let localHighScore = localStorage.getItem('high-score');
     if (localHighScore !== null) {
-        this.highScoreText.setText('HIGH SCORE\n' + localHighScore.toString().padStart(6, '0'))
+        this.highScoreText.setText('MAXIMO PUNTAJE\n' + localHighScore.toString().padStart(6, '0'))
     }
-    
+
     updateScore.call(this);
 }
 
 function updateScore() {
     if (!this.scoreText) return;
 
-    this.scoreText.setText('MARIO\n' + score.toString().padStart(6, '0'));
+    this.scoreText.setText('INCALION\n' + score.toString().padStart(6, '0'));
+    this.scoreText.setColor('#000000');
 }
 
 function updateTimer() {
@@ -40,7 +41,7 @@ function updateTimer() {
 
     if (!this.timeLeftText.stopped) {
         timeLeft--;
-        this.timeLeftText.setText('TIME\n' + timeLeft.toString().padStart(3, '0'));
+        this.timeLeftText.setText('TIEMPO\n' + timeLeft.toString().padStart(3, '0'));
     }
 
     setTimeout(() => {
@@ -49,46 +50,46 @@ function updateTimer() {
 }
 
 function addToScore(num, originObject) {
-    
+
     for (i = 1; i <= num; i++) {
         setTimeout(() => {
             score++;
             updateScore.call(this);
         }, i);
     }
-    
+
     if (!originObject) return;
-    
+
     const textEffect = this.add.text(originObject.getBounds().x, originObject.getBounds().y, num, {
-      fontFamily: 'pixel_nums',
-      fontSize: (screenWidth / 150),
-      align: 'center'
+        fontFamily: 'pixel_nums',
+        fontSize: (screenWidth / 150),
+        align: 'center'
     });
-    
+
     textEffect.setOrigin(0).smoothed = true;
     textEffect.depth = 5;
-    
+
     this.tweens.add({
-      targets: textEffect,
-      duration: 600,
-      y: textEffect.y - screenHeight / 6.5,
-      onComplete: () => {
-        this.tweens.add({
-          targets: textEffect,
-          duration: 100,
-          alpha: 0,
-          onComplete: () => {
-            textEffect.destroy();
-          }
-        });
-      }
+        targets: textEffect,
+        duration: 600,
+        y: textEffect.y - screenHeight / 6.5,
+        onComplete: () => {
+            this.tweens.add({
+                targets: textEffect,
+                duration: 100,
+                alpha: 0,
+                onComplete: () => {
+                    textEffect.destroy();
+                }
+            });
+        }
     });
-  }
+}
 
 
 // Game over functions
 
-function gameOverScreen(outOfTime=false) {
+function gameOverScreen(outOfTime = false) {
     if (localStorage.getItem('high-score') !== null) {
         if (localStorage.getItem('high-score') < score) {
             localStorage.setItem('high-score', score);
@@ -107,8 +108,8 @@ function gameOverScreen(outOfTime=false) {
         duration: 200,
         alpha: 1
     });
-    this.add.bitmapText(screenCenterX, screenHeight / 3, 'carrier_command', outOfTime ? 'TIME UP' : 'GAME OVER', screenWidth / 30).setOrigin(0.5).depth = 5;
-    this.add.bitmapText(screenCenterX, screenHeight / 2, 'carrier_command', '> PLAY AGAIN', screenWidth / 50).setOrigin(0.5).setInteractive().on('pointerdown', () => location.reload()).depth = 5;
+    this.add.bitmapText(screenCenterX, screenHeight / 3, 'carrier_command', outOfTime ? 'TIEMPO AGOTADO' : 'GAME OVER', screenWidth / 30).setOrigin(0.5).depth = 5;
+    this.add.bitmapText(screenCenterX, screenHeight / 2, 'carrier_command', '> JUGAR DE NUEVO', screenWidth / 50).setOrigin(0.5).setInteractive().on('pointerdown', () => location.reload()).depth = 5;
     this.add.bitmapText(screenCenterX, screenHeight / 1.7, 'carrier_command', '> SCREENSHOT', screenWidth / 50).setOrigin(0.5).setInteractive().on('pointerdown', () => getScreenshot()).depth = 5;
 }
 
@@ -137,8 +138,8 @@ function gameOverFunc() {
     player.body.setSize(16, 16).setOffset(0);
     player.setVelocityX(0);
     setTimeout(() => {
-    player.body.enable = true;
-    player.setVelocityY(-velocityY * 1.1);
+        player.body.enable = true;
+        player.setVelocityY(-velocityY * 1.1);
     }, 500);
     this.musicTheme.stop();
     this.undergroundMusicTheme.stop();
@@ -156,11 +157,11 @@ function winScreen() {
     if (localStorage.getItem('high-score') !== null) {
         if (localStorage.getItem('high-score') < score) {
             localStorage.setItem('high-score', score);
-            this.highScoreText.setText('NEW HIGH SCORE!\n' + score.toString().padStart(6, '0'))
+            this.highScoreText.setText('NUEVO RECORD!\n' + score.toString().padStart(6, '0'))
         }
     } else {
         localStorage.setItem('high-score', score);
-        this.highScoreText.setText('NEW HIGH SCORE!\n' + score.toString().padStart(6, '0'))
+        this.highScoreText.setText('NUEVO RECORD!\n' + score.toString().padStart(6, '0'))
     }
 
     const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
@@ -172,7 +173,7 @@ function winScreen() {
         duration: 300,
         alpha: 1
     });
-    this.add.bitmapText(screenCenterX, screenHeight / 3, 'carrier_command', 'YOU WON!', screenWidth / 30).setOrigin(0.5).depth = 5;
-    this.add.bitmapText(screenCenterX, screenHeight / 2, 'carrier_command', '> PLAY AGAIN', screenWidth / 50).setOrigin(0.5).setInteractive().on('pointerdown', () => location.reload()).depth = 5;
+    this.add.bitmapText(screenCenterX, screenHeight / 3, 'carrier_command', '¡HAS GANADO!', screenWidth / 30).setOrigin(0.5).depth = 5;
+    this.add.bitmapText(screenCenterX, screenHeight / 2, 'carrier_command', '> JUGAR DE NUEVO', screenWidth / 50).setOrigin(0.5).setInteractive().on('pointerdown', () => location.reload()).depth = 5;
     this.add.bitmapText(screenCenterX, screenHeight / 1.7, 'carrier_command', '> SCREENSHOT', screenWidth / 50).setOrigin(0.5).setInteractive().on('pointerdown', () => getScreenshot()).depth = 5;
 }
