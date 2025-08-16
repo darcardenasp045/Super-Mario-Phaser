@@ -7,7 +7,7 @@ function createAnimations() {
     });
     this.anims.create({
         key: 'run',
-        frames: this.anims.generateFrameNumbers('mario', { start: 3, end: 1 }),
+        frames: this.anims.generateFrameNumbers('mario', { start: 5, end: 1 }),
         frameRate: 12,
         repeat: -1
     });
@@ -79,7 +79,7 @@ function createAnimations() {
         key: 'goomba-hurt',
         frames: [{ key: 'goomba', frame: 2 }]
     });
-    
+
     //> koopas animations
     this.anims.create({
         key: 'koopa-idle',

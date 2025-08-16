@@ -134,7 +134,7 @@ function preload() {
     let levelStyle = 'overworld';
 
     // Load entities sprites
-    this.load.spritesheet('mario', 'assets/entities/mario.png', { frameWidth: 18, frameHeight: 16 });
+    this.load.spritesheet('mario', 'assets/entities/mario.png', { frameWidth: 120, frameHeight: 131 });
     this.load.spritesheet('mario-grown', 'assets/entities/mario-grown.png', { frameWidth: 18, frameHeight: 32 });
     this.load.spritesheet('mario-fire', 'assets/entities/mario-fire.png', { frameWidth: 18, frameHeight: 32 });
     this.load.spritesheet('goomba', 'assets/entities/' + levelStyle + '/goomba.png', { frameWidth: 16, frameHeight: 16 });
@@ -377,7 +377,8 @@ function drawWorld() {
 
     //> Drawing the Sky
     // Repite la imagen de fondo usando tileSprite para que cubra todo el ancho del mundo y se vea bien
-    this.add.tileSprite(0, 0, worldWidth, screenHeight, 'background').setOrigin(0).setDepth(-1);
+    // Para mover la imagen la mitad arriba, ajusta el segundo parámetro (y) a -screenHeight / 2.
+    this.add.tileSprite(0, -screenHeight / 5, worldWidth, screenHeight, 'background').setOrigin(0).setDepth(-1);
 
     let propsY = screenHeight - platformHeight;
 
@@ -592,7 +593,8 @@ function startLevel(player, trigger) {
             this.undergroundMusicTheme.play({ loop: -1 });
         }
 
-        player.x = screenWidth * 1.1;
+    player.x = screenWidth / 2; // Center horizontally
+    player.y = screenHeight - platformHeight - 50; // Place Mario above the blocks
         this.cameras.main.pan(screenWidth * 1.5, 0, 0);
         playerBlocked = false;
         this.cameras.main.fadeIn(500, 0, 0, 0);
@@ -621,7 +623,8 @@ function bootIntoOverworld() {
     levelStarted = true;
 
     // Position player inside the playable world (same as startLevel)
-    player.x = screenWidth * 1.1;
+    player.x = screenWidth / 2; // Center horizontally
+    player.y = screenHeight - platformHeight - 50; // Place Mario above the blocks
 
     // Camera pan to the usual starting area
     this.cameras.main.pan(screenWidth * 1.5, 0, 0);
