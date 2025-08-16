@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap");
 
 @font-face {
   font-family: pixel_nums;
-  src: url('../fonts/SuperMario.ttf');
+  src: url("../fonts/SuperMario.ttf");
 }
 html,
 body {
   zoom: 100%;
   max-zoom: 100%;
   min-zoom: 100%;
-  background: rgb(132, 132, 255);
+  background: rgb(88, 2, 248);
   margin: 0px;
   padding: 0px;
   overflow: hidden;
@@ -63,19 +63,19 @@ body {
   padding-left: 4rem;
   margin-left: 50%;
   margin-right: 50%;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
 }
-.blurbg{
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1040;
-    width: 100%;
-    height: 100%;
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(10px);
-    background: rgba(50, 50, 50, 0.15);
-    display: grid;
-    box-sizing: content-box;
-    place-items: center;
+.blurbg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100%;
+  height: 100%;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
+  background: rgba(50, 50, 50, 0.15);
+  display: grid;
+  box-sizing: content-box;
+  place-items: center;
 }

@@ -1,4 +1,4 @@
-let title = "Super Mario Phaser";
+let title = "Super Incalionaa";
 let index = 0;
 let direction = 1;
 
@@ -11,12 +11,12 @@ function isWhiteSpace(letter) {
 
 function updateTitle() {
   index += direction;
-  
+
   if (isWhiteSpace(title.charAt(index))) {
     index += direction;
   }
 
-  document.title = '🗿 - ' + title.substring(0, index);
+  document.title = '🐊 - ' + title.substring(0, index);
 
   if (index >= title.length || index <= 0) {
     direction *= -1;

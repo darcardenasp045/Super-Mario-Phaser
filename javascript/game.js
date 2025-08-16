@@ -14,7 +14,7 @@ var config = {
     type: Phaser.AUTO,
     width: screenWidth,
     height: screenHeight,
-    backgroundColor: 0x8585FF,
+    backgroundColor: 0x000000,
     parent: 'game',
     preserveDrawingBuffer: true,
     physics: {
@@ -92,64 +92,33 @@ var SmoothedHorionztalControl = new Phaser.Class({
 
     initialize:
 
-    function SmoothedHorionztalControl(speed) {
+        function SmoothedHorionztalControl(speed) {
             this.msSpeed = speed;
             this.value = 0;
-    },
+        },
 
-    moveLeft: function(delta) {
+    moveLeft: function (delta) {
         if (this.value > 0) { this.reset(); }
         this.value -= this.msSpeed * 3.5;
         if (this.value < -1) { this.value = -1; }
         playerController.time.rightDown += delta;
     },
 
-    moveRight: function(delta) {
+    moveRight: function (delta) {
         if (this.value < 0) { this.reset(); }
         this.value += this.msSpeed * 3.5;
         if (this.value > 1) { this.value = 1; }
         playerController.time.leftDown += delta;
     },
 
-    reset: function() {
+    reset: function () {
         this.value = 0;
     }
 });
 
 function preload() {
 
-    var progressBox = this.add.graphics();
-    var progressBar = this.add.graphics();
-    progressBox.fillStyle(0x222222, 1);
-    progressBox.fillRoundedRect(screenWidth / 2.48, screenHeight / 2 * 1.05, screenWidth / 5.3, screenHeight / 20.7, 10);
-    
-    var width = this.cameras.main.width;
-    var height = this.cameras.main.height;
-    
-    var percentText = this.make.text({
-        x: width / 2,
-        y: height / 2 * 1.25,
-        text: '0%',
-        style: {
-            font: screenWidth / 96 + 'px pixel_nums',
-            fill: '#ffffff'
-        }
-    });
-    percentText.setOrigin(0.5, 0.5);
-    
-    this.load.on('progress', function (value) {
-        percentText.setText(value * 99 >= 99 ? 'Generating world...' : 'Loading... ' + parseInt(value * 99) + '%');
-        progressBar.clear();
-        progressBar.fillStyle(0xffffff, 1);
-        progressBar.fillRoundedRect(screenWidth / 2.45, screenHeight / 2 * 1.07, screenWidth / 5.6 * value, screenHeight / 34.5, 5);
-    });
-    
-    this.load.on('complete', function () {
-        progressBar.destroy();
-        progressBox.destroy();
-        percentText.destroy();
-        loadingGif.forEach(gif => {gif.style.display = 'none';});
-    });
+
 
     // Load Fonts
     this.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
@@ -160,9 +129,9 @@ function preload() {
     this.load.plugin('rexsliderplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexsliderplugin.min.js', true);
     this.load.plugin('rexkawaseblurpipelineplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexkawaseblurpipelineplugin.min.js', true);
 
-    isLevelOverworld = Phaser.Math.Between(0, 100) <= 84;
-
-    let levelStyle = isLevelOverworld ? 'overworld' : 'underground';
+    // FORCE OVERWORLD — always start overworld
+    isLevelOverworld = true;
+    let levelStyle = 'overworld';
 
     // Load entities sprites
     this.load.spritesheet('mario', 'assets/entities/mario.png', { frameWidth: 18, frameHeight: 16 });
@@ -197,7 +166,7 @@ function preload() {
     this.load.image('vertical-medium-tube', 'assets/scenery/vertical-medium-tube.png');
     this.load.image('vertical-large-tube', 'assets/scenery/vertical-large-tube.png');
 
-    
+
     // Load HUD images
     this.load.image('gear', 'assets/hud/gear.png');
     this.load.image('settings-bubble', 'assets/hud/settings-bubble.png');
@@ -226,7 +195,7 @@ function preload() {
     // Load sounds and music
     this.load.audio('music', 'assets/sound/music/overworld/theme.mp3');
     this.load.audio('underground-music', 'assets/sound/music/underground/theme.mp3');
-    this.load.audio('hurry-up-music', 'assets/sound/music/' + levelStyle +'/hurry-up-theme.mp3');
+    this.load.audio('hurry-up-music', 'assets/sound/music/' + levelStyle + '/hurry-up-theme.mp3');
     this.load.audio('gameoversong', 'assets/sound/music/gameover.mp3');
     this.load.audio('win', 'assets/sound/music/win.wav');
     this.load.audio('jumpsound', 'assets/sound/effects/jump.mp3');
@@ -261,7 +230,7 @@ function initSounds() {
 
     this.gameOverSong = this.sound.add('gameoversong', { volume: 0.3 });
     this.musicGroup.add(this.gameOverSong);
-        
+
     this.winSound = this.sound.add('win', { volume: 0.3 });
     this.musicGroup.add(this.winSound);
 
@@ -335,11 +304,15 @@ function create() {
     createPlayer.call(this);
     generateLevel.call(this);
     drawWorld.call(this);
-    drawStartScreen.call(this);
+
+    // --- BOOT DIRECTLY INTO OVERWORLD (no start screen / no tube trigger) ---
+    bootIntoOverworld.call(this);
+    // ----------------------------------------------------------------------
+
     createGoombas.call(this);
     createControls.call(this);
     applySettings.call(this);
-    
+
     smoothedControls = new SmoothedHorionztalControl(0.001);
 }
 
@@ -360,10 +333,10 @@ function createControls() {
 
     const keyNames = ['JUMP', 'DOWN', 'LEFT', 'RIGHT', 'FIRE', 'PAUSE'];
     const defaultCodes = [Phaser.Input.Keyboard.KeyCodes.SPACE, Phaser.Input.Keyboard.KeyCodes.S, Phaser.Input.Keyboard.KeyCodes.A, Phaser.Input.Keyboard.KeyCodes.D, Phaser.Input.Keyboard.KeyCodes.Q, Phaser.Input.Keyboard.KeyCodes.ESC];
-    
+
     keyNames.forEach((keyName, i) => {
-      const keyCode = localStorage.getItem(keyName) ? Number(localStorage.getItem(keyName)) : defaultCodes[i];
-      controlKeys[keyName] = this.input.keyboard.addKey(keyCode);
+        const keyCode = localStorage.getItem(keyName) ? Number(localStorage.getItem(keyName)) : defaultCodes[i];
+        controlKeys[keyName] = this.input.keyboard.addKey(keyCode);
     });
 
     /*
@@ -380,20 +353,20 @@ function createControls() {
 function generateRandomCoordinate(entitie = false, ground = true) {
     const startPos = entitie ? screenWidth * 1.5 : screenWidth;
     const endPos = entitie ? worldWidth - screenWidth * 3 : worldWidth;
-  
+
     let coordinate = Phaser.Math.Between(startPos, endPos);
-  
+
     if (!ground) return coordinate;
-  
+
     for (let hole of worldHolesCoords) {
-      if (coordinate >= hole.start - platformPiecesWidth * 1.5 && coordinate <= hole.end) {
-        return generateRandomCoordinate.call(this, entitie, ground);
-      }
+        if (coordinate >= hole.start - platformPiecesWidth * 1.5 && coordinate <= hole.end) {
+            return generateRandomCoordinate.call(this, entitie, ground);
+        }
     }
-  
+
     return coordinate;
-  }
-  
+}
+
 
 // World generation
 
@@ -401,7 +374,7 @@ function drawWorld() {
     //Drawing scenery props
 
     //> Drawing the Sky
-    this.add.rectangle(screenWidth, 0,worldWidth, screenHeight, isLevelOverworld ? 0x8585FF : 0x000000).setOrigin(0).depth = -1;
+    this.add.rectangle(screenWidth, 0, worldWidth, screenHeight, isLevelOverworld ? 0x8585FF : 0x000000).setOrigin(0).depth = -1;
 
     let propsY = screenHeight - platformHeight;
 
@@ -427,7 +400,7 @@ function drawWorld() {
                 this.add.image(x, propsY, 'mountain2').setOrigin(0, 1).setScale(screenHeight / 517);
             }
         }
-        
+
         //> Bushes
         for (i = 0; i < Phaser.Math.Between(Math.trunc(worldWidth / 960), Math.trunc(worldWidth / 760)); i++) {
             let x = generateRandomCoordinate();
@@ -489,7 +462,7 @@ function generateLevel() {
         this.blocksGroup.add(this.undergroundRoof);
     }
 
-    for (i=0; i <= platformPieces; i++) {
+    for (i = 0; i <= platformPieces; i++) {
         // Holes will have a 10% chance of spawning
         let number = Phaser.Math.Between(0, 100);
 
@@ -518,9 +491,11 @@ function generateLevel() {
             }
         } else {
             // Save every hole start and end for later use
-            worldHolesCoords.push({ start: pieceStart, 
-                end: pieceStart + platformPiecesWidth * 2});
-            
+            worldHolesCoords.push({
+                start: pieceStart,
+                end: pieceStart + platformPiecesWidth * 2
+            });
+
             lastWasHole = 2;
             this.fallProtectionGroup.add(this.add.rectangle(pieceStart + platformPiecesWidth * 2, screenHeight - platformHeight, 5, 5).setOrigin(0, 1));
             this.fallProtectionGroup.add(this.add.rectangle(pieceStart, screenHeight - platformHeight, 5, 5).setOrigin(1, 1));
@@ -582,7 +557,7 @@ function generateLevel() {
         misteryBlocks[i].anims.play('mistery-block-default', true);
         this.physics.add.collider(player, misteryBlocks[i], revealHiddenBlock, null, this);
     }
-    
+
     // Apply player collision with blocks
     let blocks = this.blocksGroup.getChildren();
     for (let i = 0; i < blocks.length; i++) {
@@ -660,16 +635,53 @@ function startLevel(player, trigger) {
         updateTimer.call(this);
         this.startScreenTrigger.destroy();
         levelStarted = true;
-        if (this.settingsMenuOpen)hideSettings.call(this);
+        if (this.settingsMenuOpen) hideSettings.call(this);
     }, 1100);
 }
 
+
+// -----------------------------------------------------------------------------
+// New helper: boot the game directly into the overworld state (post-tube).
+// This replicates what startLevel does but without the tube check/animation.
+// -----------------------------------------------------------------------------
+function bootIntoOverworld() {
+    // Make sure physics world limits are set as if we've entered the tube
+    this.physics.world.setBounds(screenWidth, 0, worldWidth, screenHeight);
+
+    // Apply player invulnerability briefly (like startLevel does)
+    try { applyPlayerInvulnerability.call(this, 4000); } catch (e) { /* if function missing, ignore */ }
+
+    // Player state
+    playerBlocked = false;
+    levelStarted = true;
+
+    // Position player inside the playable world (same as startLevel)
+    player.x = screenWidth * 1.1;
+
+    // Camera pan to the usual starting area
+    this.cameras.main.pan(screenWidth * 1.5, 0, 0);
+
+    // HUD + timer
+    try { createHUD.call(this); } catch (e) { /* ignore if HUD code not yet loaded */ }
+    try { updateTimer.call(this); } catch (e) { /* ignore if timer code not yet loaded */ }
+
+    // Remove the start screen trigger so it won't interfere
+    if (this.startScreenTrigger && this.startScreenTrigger.destroy) {
+        try { this.startScreenTrigger.destroy(); } catch (e) { /* ignore */ }
+    }
+
+    // Ensure settings menu hidden
+    if (this.settingsMenuOpen) {
+        try { hideSettings.call(this); } catch (e) { /* ignore */ }
+    }
+}
+// -----------------------------------------------------------------------------
 
 function teleportToLevelEnd(player, trigger) {
 
     if (!player.body.blocked.right && !trigger.body.blocked.left)
         return;
-    
+
     playerBlocked = true;
 
     this.cameras.main.stopFollow();
@@ -684,7 +696,7 @@ function teleportToLevelEnd(player, trigger) {
 
     this.cameras.main.fadeOut(450, 0, 0, 0);
 
-    player.anims.play(playerState > 0 ? playerState == 1 ? 'grown-mario-run'  : 'fire-mario-run' : 'run', true).flipX = false;
+    player.anims.play(playerState > 0 ? playerState == 1 ? 'grown-mario-run' : 'fire-mario-run' : 'run', true).flipX = false;
 
     this.undergroundRoof.destroy();
 
@@ -696,7 +708,7 @@ function teleportToLevelEnd(player, trigger) {
         this.tpTube.body.allowGravity = false;
         this.tpTube.body.immovable = true;
         this.physics.add.collider(player, this.tpTube);
-        this.add.rectangle(worldWidth - screenWidth, 0, worldWidth, screenHeight,0x8585FF).setOrigin(0).depth = -1;
+        this.add.rectangle(worldWidth - screenWidth, 0, worldWidth, screenHeight, 0x8585FF).setOrigin(0).depth = -1;
         this.add.tileSprite(worldWidth - screenWidth, screenHeight, screenWidth, platformHeight, 'start-floorbricks').setScale(2).setOrigin(0, 0.5).depth = 2;
     }, 500);
 
@@ -719,7 +731,7 @@ function teleportToLevelEnd(player, trigger) {
 }
 
 function drawStartScreen() {
-    
+
     const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
 
     // Draw sky
@@ -737,7 +749,7 @@ function drawStartScreen() {
     "Known bugs: \n. Mobile controls are (at least) not nice",
     { fontFamily: 'pixel_nums', fontSize: (screenWidth / 115), align: 'left'}).setLineSpacing(screenHeight / 34.5);
     */
-   
+
     this.add.image(screenWidth / 50, screenHeight / 3, 'cloud1').setScale(screenHeight / 1725);
     this.add.image(screenWidth / 1.25, screenHeight / 2, 'cloud1').setScale(screenHeight / 1725);
     this.add.image(screenWidth / 1.05, screenHeight / 6.5, 'cloud2').setScale(screenHeight / 1725);
@@ -760,9 +772,9 @@ function drawStartScreen() {
 
     this.add.tileSprite(screenWidth / 15, propsY, 350, 35, 'fence').setOrigin(0, 1).setScale(screenHeight / 863);
 
-    this.customBlock = this.add.sprite(screenCenterX, screenHeight - (platformHeight * 1.9),'custom-block').setScale(screenHeight / 345);
+    this.customBlock = this.add.sprite(screenCenterX, screenHeight - (platformHeight * 1.9), 'custom-block').setScale(screenHeight / 345);
     this.customBlock.anims.play('custom-block-default')
-    this.physics.add.collider(player, this.customBlock, function() {
+    this.physics.add.collider(player, this.customBlock, function () {
         if (player.body.blocked.up) showSettings.call(this);
     }, null, this);
     this.physics.add.existing(this.customBlock);
@@ -799,7 +811,7 @@ function raiseFlag() {
     setTimeout(() => {
         this.winSound.play();
     }, 1000);
-    
+
     flagRaised = true;
     playerBlocked = true;
 
@@ -815,8 +827,8 @@ function consumeMushroom(player, mushroom) {
     addToScore.call(this, 1000, mushroom);
     mushroom.destroy();
 
-    if (playerState > 0 )
-    return;
+    if (playerState > 0)
+        return;
 
     playerBlocked = true;
     this.anims.pauseAll();
@@ -832,7 +844,7 @@ function consumeMushroom(player, mushroom) {
         }
     }, 100);
 
-    setTimeout(() => { 
+    setTimeout(() => {
         this.physics.resume();
         this.anims.resumeAll();
         playerBlocked = false;
@@ -849,8 +861,8 @@ function consumeFireflower(player, fireFlower) {
     addToScore.call(this, 1000, fireFlower);
     fireFlower.destroy();
 
-    if (playerState > 1 )
-    return;
+    if (playerState > 1)
+        return;
 
     let anim = playerState > 0 ? 'grown-mario-idle' : 'idle';
 
@@ -869,7 +881,7 @@ function consumeFireflower(player, fireFlower) {
         }
     }, 100);
 
-    setTimeout(() => { 
+    setTimeout(() => {
         this.physics.resume();
         this.anims.resumeAll();
         playerBlocked = false;
@@ -912,3 +924,4 @@ function update(delta) {
         camera.stopFollow();
     }
 }
+ddd
