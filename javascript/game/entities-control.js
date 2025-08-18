@@ -6,7 +6,7 @@ function createGoombas() {
 
     for (i = 0; i < Math.trunc(worldWidth / 960); i++) {
         let x = generateRandomCoordinate(true);
-        let goomba = this.physics.add.sprite(x, screenHeight - platformHeight, 'goomba').setOrigin(0.5, 1).setBounce(1, 0).setScale(screenHeight / 376);
+        let goomba = this.physics.add.sprite(x, screenHeight - platformHeight, 'goomba').setOrigin(0.5, 1).setBounce(1, 0).setScale(screenHeight / 500);
         goomba.anims.play('goomba-walk', true);
         goomba.smoothed = true;
         goomba.depth = 2;
@@ -41,7 +41,7 @@ function checkGoombaCollision(player, goomba) {
 
     if (goomba.dead)
         return;
-    
+
     let goombaBeingStomped = player.body.touching.down && goomba.body.touching.up;
 
     if (flagRaised)
@@ -52,7 +52,7 @@ function checkGoombaCollision(player, goomba) {
             return;
         }
     }
-    
+
     if (goombaBeingStomped) {
         goomba.anims.play('goomba-hurt', true);
         goomba.body.enable = false;
@@ -72,9 +72,9 @@ function checkGoombaCollision(player, goomba) {
         }, 500);
         return;
     }
-    
+
     decreasePlayerState.call(this);
-        
+
     return;
 }
 
