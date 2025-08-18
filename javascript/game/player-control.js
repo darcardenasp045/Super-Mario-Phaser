@@ -203,7 +203,7 @@ function updatePlayer(delta) {
                 player.body.setSize(14, 32).setOffset(2, 0);
 
             if (playerState == 0)
-                player.body.setSize(142, 130).setOffset(13, 20);
+                player.body.setSize(152, 130).setOffset(34, 80);
         }
     }
 
