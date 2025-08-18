@@ -21,7 +21,7 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: { y: levelGravity },
-            debug: false
+            debug: true
         }
     },
     scene: {
@@ -593,8 +593,8 @@ function startLevel(player, trigger) {
             this.undergroundMusicTheme.play({ loop: -1 });
         }
 
-    player.x = screenWidth / 2; // Center horizontally
-    player.y = screenHeight - platformHeight - 50; // Place Mario above the blocks
+        player.x = screenWidth / 2; // Center horizontally
+        player.y = screenHeight - platformHeight - 50; // Place Mario above the blocks
         this.cameras.main.pan(screenWidth * 1.5, 0, 0);
         playerBlocked = false;
         this.cameras.main.fadeIn(500, 0, 0, 0);
