@@ -2,8 +2,8 @@ const loadingGif = document.querySelectorAll('.loading-gif');
 
 const mobileDevice = isMobileDevice();
 
-const screenWidth = window.innerWidth;
-const screenHeight = window.innerHeight * 1.1;
+const screenWidth = 1200;
+const screenHeight = 600;
 
 const velocityX = screenWidth / 4.5;
 const velocityY = screenHeight / 1.15;
@@ -21,7 +21,7 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: { y: levelGravity },
-            debug: false
+            debug: true
         }
     },
     scene: {
@@ -134,7 +134,7 @@ function preload() {
     let levelStyle = 'overworld';
 
     // Load entities sprites
-    this.load.spritesheet('mario', 'assets/entities/mario.png', { frameWidth: 18, frameHeight: 16 });
+    this.load.spritesheet('mario', 'assets/entities/mario.png', { frameWidth: 200, frameHeight: 217 });
     this.load.spritesheet('mario-grown', 'assets/entities/mario-grown.png', { frameWidth: 18, frameHeight: 32 });
     this.load.spritesheet('mario-fire', 'assets/entities/mario-fire.png', { frameWidth: 18, frameHeight: 32 });
     this.load.spritesheet('goomba', 'assets/entities/' + levelStyle + '/goomba.png', { frameWidth: 16, frameHeight: 16 });
@@ -293,10 +293,10 @@ function create() {
         }
     };
 
-    this.physics.world.setBounds(0, 0, worldWidth, screenHeight);
+    this.physics.world.setBounds(0, 0, worldWidth, screenHeight + 100);
 
     // Create camera
-    this.cameras.main.setBounds(0, 0, worldWidth, screenHeight);
+    this.cameras.main.setBounds(0, 0, worldWidth, screenHeight + 100);
     this.cameras.main.isFollowing = false;
     //this.cameras.main.followOffset.set(startOffset / 6, 0);
 
@@ -572,7 +572,7 @@ function startLevel(player, trigger) {
 
     this.powerDownSound.play();
 
-    this.physics.world.setBounds(screenWidth, 0, worldWidth, screenHeight);
+    this.physics.world.setBounds(screenWidth, 0, worldWidth, screenHeight + 100);
 
     applyPlayerInvulnerability.call(this, 4000);
 
@@ -611,7 +611,7 @@ function startLevel(player, trigger) {
 // -----------------------------------------------------------------------------
 function bootIntoOverworld() {
     // Make sure physics world limits are set as if we've entered the tube
-    this.physics.world.setBounds(screenWidth, 0, worldWidth, screenHeight);
+    this.physics.world.setBounds(screenWidth, 0, worldWidth, screenHeight + 100);
 
     // Apply player invulnerability briefly (like startLevel does)
     try { applyPlayerInvulnerability.call(this, 4000); } catch (e) { /* if function missing, ignore */ }
