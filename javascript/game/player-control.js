@@ -195,17 +195,12 @@ function updatePlayer(delta) {
                 player.setVelocityX(0);
             }
 
-            player.body.setSize(120, 110).setOffset(10, 20);
+            player.body.setSize(100, 100).setOffset(34, 40);
 
             return;
-        } else {
-            if (playerState > 0)
-                player.body.setSize(120, 110).setOffset(10, 20);
-
-            if (playerState == 0)
-                player.body.setSize(100, 100).setOffset(2, 1);
         }
     }
+
 
     if (player.body.touching.down && playerState == 2 && controlKeys.FIRE.isDown && !fireInCooldown) {
         throwFireball.call(this);
