@@ -195,15 +195,15 @@ function updatePlayer(delta) {
                 player.setVelocityX(0);
             }
 
-            player.body.setSize(14, 22).setOffset(2, 10);
+            player.body.setSize(120, 110).setOffset(10, 20);
 
             return;
         } else {
             if (playerState > 0)
-                player.body.setSize(14, 32).setOffset(2, 0);
+                player.body.setSize(120, 110).setOffset(10, 20);
 
             if (playerState == 0)
-                player.body.setSize(120, 110).setOffset(10, 20);
+                player.body.setSize(100, 100).setOffset(2, 1);
         }
     }
 
