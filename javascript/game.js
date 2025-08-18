@@ -155,9 +155,9 @@ function preload() {
     this.load.image('fence', 'assets/scenery/overworld/fence.png');
     this.load.image('bush1', 'assets/scenery/overworld/bush1.png');
     this.load.image('bush2', 'assets/scenery/overworld/bush2.png');
-    this.load.image('castle', 'assets/scenery/castle.png');
-    this.load.image('flag-mast', 'assets/scenery/flag-mast.png');
-    this.load.image('final-flag', 'assets/scenery/final-flag.png');
+    this.load.image('castles', 'assets/scenery/castle.png');
+    this.load.image('flag-masts', 'assets/scenery/flag-mast.png');
+    this.load.image('final-flags', 'assets/scenery/final-flag.png');
     this.load.image('sign', 'assets/scenery/sign.png');
 
     // Load tubes
