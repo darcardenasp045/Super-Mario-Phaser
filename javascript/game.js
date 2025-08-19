@@ -36,8 +36,8 @@ function isMobileDevice() {
 const mobileDevice = isMobileDevice();
 
 // Dimensiones base del lienzo de juego
-const screenWidth = window.innerWidth; // Ancho visible del navegador
-const screenHeight = window.innerHeight * 1.1; // Alto (ligera ampliación)
+const screenWidth = 1200; // Ancho visible del navegador
+const screenHeight = 800; // Alto (ligera ampliación)
 
 // Velocidades y gravedad derivadas del tamaño de pantalla (escalado responsivo)
 const velocityX = screenWidth / 4.5;
@@ -287,50 +287,50 @@ function initSounds() {
     this.effectsGroup = this.add.group();
 
     // Temas musicales
-    this.musicTheme = this.sound.add('music', { volume: 0.15 });
+    this.musicTheme = this.sound.add('music', { volume: 0 });
     this.musicTheme.play({ loop: -1 });
     this.musicGroup.add(this.musicTheme);
 
-    this.undergroundMusicTheme = this.sound.add('underground-music', { volume: 0.15 });
+    this.undergroundMusicTheme = this.sound.add('underground-music', { volume: 0 });
     this.musicGroup.add(this.undergroundMusicTheme);
 
-    this.hurryMusicTheme = this.sound.add('hurry-up-music', { volume: 0.15 });
+    this.hurryMusicTheme = this.sound.add('hurry-up-music', { volume: 0 });
     this.musicGroup.add(this.hurryMusicTheme);
 
     // Otros sonidos (victoria/derrota)
-    this.gameOverSong = this.sound.add('gameoversong', { volume: 0.3 });
+    this.gameOverSong = this.sound.add('gameoversong', { volume: 0 });
     this.musicGroup.add(this.gameOverSong);
-    this.winSound = this.sound.add('win', { volume: 0.3 });
+    this.winSound = this.sound.add('win', { volume: 0 });
     this.musicGroup.add(this.winSound);
 
     // Efectos del jugador y entorno
-    this.jumpSound = this.sound.add('jumpsound', { volume: 0.1 });
+    this.jumpSound = this.sound.add('jumpsound', { volume: 0 });
     this.effectsGroup.add(this.jumpSound);
-    this.coinSound = this.sound.add('coin', { volume: 0.2 });
+    this.coinSound = this.sound.add('coin', { volume: 0 });
     this.effectsGroup.add(this.coinSound);
-    this.powerUpAppearsSound = this.sound.add('powerup-appears', { volume: 0.2 });
+    this.powerUpAppearsSound = this.sound.add('powerup-appears', { volume: 0 });
     this.effectsGroup.add(this.powerUpAppearsSound);
-    this.consumePowerUpSound = this.sound.add('consume-powerup', { volume: 0.2 });
+    this.consumePowerUpSound = this.sound.add('consume-powerup', { volume: 0 });
     this.effectsGroup.add(this.consumePowerUpSound);
-    this.powerDownSound = this.sound.add('powerdown', { volume: 0.3 });
+    this.powerDownSound = this.sound.add('powerdown', { volume: 0 });
     this.effectsGroup.add(this.powerDownSound);
-    this.goombaStompSound = this.sound.add('goomba-stomp', { volume: 1 });
+    this.goombaStompSound = this.sound.add('goomba-stomp', { volume: 0 });
     this.effectsGroup.add(this.goombaStompSound);
-    this.flagPoleSound = this.sound.add('flagpole', { volume: 0.3 });
+    this.flagPoleSound = this.sound.add('flagpole', { volume: 0 });
     this.effectsGroup.add(this.flagPoleSound);
-    this.fireballSound = this.sound.add('fireball', { volume: 0.3 });
+    this.fireballSound = this.sound.add('fireball', { volume: 0 });
     this.effectsGroup.add(this.fireballSound);
-    this.kickSound = this.sound.add('kick', { volume: 0.3 });
+    this.kickSound = this.sound.add('kick', { volume: 0 });
     this.effectsGroup.add(this.kickSound);
-    this.timeWarningSound = this.sound.add('time-warning', { volume: 0.2 });
+    this.timeWarningSound = this.sound.add('time-warning', { volume: 0 });
     this.effectsGroup.add(this.timeWarningSound);
-    this.hereWeGoSound = this.sound.add('here-we-go', { volume: 0.17 });
+    this.hereWeGoSound = this.sound.add('here-we-go', { volume: 0 });
     this.effectsGroup.add(this.hereWeGoSound);
-    this.pauseSound = this.sound.add('pauseSound', { volume: 0.17 });
+    this.pauseSound = this.sound.add('pauseSound', { volume: 0 });
     this.effectsGroup.add(this.pauseSound);
-    this.blockBumpSound = this.sound.add('block-bump', { volume: 0.3 });
+    this.blockBumpSound = this.sound.add('block-bump', { volume: 0 });
     this.effectsGroup.add(this.blockBumpSound);
-    this.breakBlockSound = this.sound.add('break-block', { volume: 0.5 });
+    this.breakBlockSound = this.sound.add('break-block', { volume: 0 });
     this.effectsGroup.add(this.breakBlockSound);
 }
 
