@@ -2,7 +2,7 @@
 function createPlayer() {
     // Draw player
     player = this.physics.add.sprite( /*screenWidth * 1.5*/ startOffset, screenHeight - platformHeight, 'mario').setOrigin(1).setBounce(0)
-        .setCollideWorldBounds(true).setScale(.7);
+        .setCollideWorldBounds(true).setScale(.9);
     player.depth = 3;
     /*this.cameras.main.startFollow(player);
     playerState = 2;*/

@@ -190,16 +190,16 @@ function preload() {
 
     // Entidades del jugador (diferentes estados)
     this.load.spritesheet('mario', 'assets/entities/mario.png', {
-        frameWidth: 85,
-        frameHeight: 87
+        frameWidth: 95,
+        frameHeight: 95
     });
     this.load.spritesheet('mario-grown', 'assets/entities/mario-grown.png', {
-        frameWidth: 120,
-        frameHeight: 131
+        frameWidth: 85,
+        frameHeight: 95
     });
     this.load.spritesheet('mario-fire', 'assets/entities/mario-fire.png', {
-        frameWidth: 120,
-        frameHeight: 152
+        frameWidth: 76,
+        frameHeight: 95
     });
 
     // Enemigos

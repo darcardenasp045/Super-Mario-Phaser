@@ -174,5 +174,4 @@ function winScreen() {
     });
     this.add.bitmapText(screenCenterX, screenHeight / 3, 'carrier_command', '¡HAS GANADO!', screenWidth / 30).setOrigin(0.5).depth = 5;
     this.add.bitmapText(screenCenterX, screenHeight / 2, 'carrier_command', '> JUGAR DE NUEVO', screenWidth / 50).setOrigin(0.5).setInteractive().on('pointerdown', () => location.reload()).depth = 5;
-    this.add.bitmapText(screenCenterX, screenHeight / 1.7, 'carrier_command', '> SCREENSHOT', screenWidth / 50).setOrigin(0.5).setInteractive().on('pointerdown', () => getScreenshot()).depth = 5;
 }
