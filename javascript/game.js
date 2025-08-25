@@ -201,7 +201,6 @@ function preload() {
         frameWidth: 76,
         frameHeight: 95
     });
-
     // Enemigos
     this.load.spritesheet('goomba', `assets/entities/${levelStyle}/goomba.png`, {
         frameWidth: 48,
@@ -211,7 +210,11 @@ function preload() {
     // Escenografía y meta
     this.load.image('background', 'assets/scenery/overworld/background.jpg');
     this.load.image('flag-mast', 'assets/scenery/flag-mast.png');
-    this.load.image('final-flag', 'assets/scenery/final-flag.png');
+
+    this.load.spritesheet('final-flag', 'assets/scenery/final-flag.png', {
+        frameWidth: 95,
+        frameHeight: 95
+    });
     this.load.image('floorbricks', `assets/scenery/${levelStyle}/floorbricks.png`);
     this.load.image('start-floorbricks', 'assets/scenery/overworld/floorbricks.png');
 
@@ -467,7 +470,7 @@ function drawWorld() {
     this.finalFlag = this.add
         .image(worldWidth - worldWidth / 30, propsY * 0.93, 'final-flag')
         .setOrigin(0.5, 1);
-    this.finalFlag.setScale(screenHeight / 400);
+    this.finalFlag.setScale(screenHeight / 800);
 
     // Castillo de llegada (decorativo)
     this.add

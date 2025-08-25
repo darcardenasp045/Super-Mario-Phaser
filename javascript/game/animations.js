@@ -7,7 +7,7 @@ function createAnimations() {
     });
     this.anims.create({
         key: 'run',
-        frames: this.anims.generateFrameNumbers('mario', { start: 5, end: 1 }),
+        frames: this.anims.generateFrameNumbers('mario', { start: 0, end: 9 }),
         frameRate: 12,
         repeat: -1
     });
@@ -17,7 +17,7 @@ function createAnimations() {
     });
     this.anims.create({
         key: 'jump',
-        frames: [{ key: 'mario', frame: 5 }]
+        frames: [{ key: 'mario', frame: 0 }]
     });
 
     //> Grown Mario animations
@@ -27,7 +27,7 @@ function createAnimations() {
     });
     this.anims.create({
         key: 'grown-mario-run',
-        frames: this.anims.generateFrameNumbers('mario-grown', { start: 3, end: 1 }),
+        frames: this.anims.generateFrameNumbers('mario-grown', { start: 0, end: 4 }),
         frameRate: 12,
         repeat: -1
     });
@@ -47,7 +47,7 @@ function createAnimations() {
     });
     this.anims.create({
         key: 'fire-mario-run',
-        frames: this.anims.generateFrameNumbers('mario-fire', { start: 3, end: 1 }),
+        frames: this.anims.generateFrameNumbers('mario-fire', { start: 0, end: 3 }),
         frameRate: 12,
         repeat: -1
     });
@@ -57,7 +57,7 @@ function createAnimations() {
     });
     this.anims.create({
         key: 'fire-mario-jump',
-        frames: [{ key: 'mario-fire', frame: 5 }]
+        frames: [{ key: 'mario-fire', frame: 1 }]
     });
     this.anims.create({
         key: 'fire-mario-throw',
@@ -130,6 +130,13 @@ function createAnimations() {
     this.anims.create({
         key: 'custom-block-default',
         frames: this.anims.generateFrameNumbers('custom-block', { start: 2, end: 0 }),
+        frameRate: 5,
+        repeat: -1,
+        repeatDelay: 5
+    });
+    this.anims.create({
+        key: 'final-flag',
+        frames: this.anims.generateFrameNumbers('final-flag', { start: 0, end: 0 }),
         frameRate: 5,
         repeat: -1,
         repeatDelay: 5
